@@ -3,13 +3,13 @@ package objects;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 
-public class Object {
+public class GameObject {
 	
 	private Node view;
 	private Point2D velocity = new Point2D(0,0);
 	private boolean alive = true;
 	
-	public Object(Node view) {
+	public GameObject(Node view) {
 		this.view = view;
 	}
 	
@@ -55,11 +55,6 @@ public class Object {
 		this.view.setRotate(this.view.getRotate() - 10);
 		setVelocity(new Point2D(Math.toRadians(getRotate()),Math.sin(Math.toRadians(getRotate()))));
 	}
-	
-	
-	public boolean isCollidings(Object other) {
-		
-		return this.getView().getBoundsInParent().intersects(other.getView().getBoundsInParent());
-	}
+
 	
 }
