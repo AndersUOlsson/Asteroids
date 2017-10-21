@@ -9,6 +9,8 @@ import javafx.application.Application;
 import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -20,21 +22,25 @@ public class AsteroidApp extends Application {
 	
 	private Pane root;
 	private GameObject player;
+	String backgroundFile ="file:///C://Users//andyw//eclipse-workspace//asteroids//images//space.jpg";
+	String gameOverImage = "file:///C://Users//andyw//eclipse-workspace//asteroids//images//spaceGameOver.jpg";
+	Image backgroundImage = new Image(backgroundFile);
+	ImageView backgroudImageView = new ImageView(backgroundImage);
 	private List<GameObject> bullets = new ArrayList<>();
 	private List<GameObject> enemies = new ArrayList<>(); 
 	
 	private Parent createContent() {
 		this.root = new Pane();
-		this.root.setPrefSize(600, 400);
+		this.root.setPrefSize(1280, 720);
 		
 		this.player = new Player();
 		this.player.setVelocity(new Point2D(1,0));
+		
+		this.root.getChildren().addAll( backgroudImageView( backgroundFile));
 		addGameObject(player, 300, 300);
 		
-		
-		
 		AnimationTimer timer = new AnimationTimer() {
-
+			
 			@Override
 			public void handle(long arg0) {
 				
@@ -46,14 +52,24 @@ public class AsteroidApp extends Application {
 		return this.root;
 	}
 	
+	private ImageView backgroudImageView(String backgroundFile) {
+		Image backgroundImage = new Image(backgroundFile);
+		ImageView backgroudImageView = new ImageView(backgroundImage);
+		
+		return backgroudImageView;
+	}
+	
 	private void addBullet(GameObject bullet, double x, double y) {
 		this.bullets.add(bullet);
 		addGameObject(bullet, x, y);
 	}
 	
-	private void addEnemy(GameObject enemy, double x, double y) {
-		this.enemies.add(enemy);
-		addGameObject(enemy, x, y);
+	private void addEnemy(GameObject enemy, double x, double y, double PlayerX, double PlayerY) {
+		if(x != PlayerX && y != PlayerY) {
+			this.enemies.add(enemy);
+			addGameObject(enemy, x, y);
+		}
+		
 	}
 	
 	private void addGameObject(GameObject object, double x, double y) {
@@ -83,6 +99,8 @@ public class AsteroidApp extends Application {
 				enemy.setAlive(false);
 				
 				this.root.getChildren().removeAll(this.player.getView(), enemy.getView());
+				this.root.getChildren().addAll( backgroudImageView(gameOverImage));
+
 			}
 		}
 		
@@ -94,8 +112,9 @@ public class AsteroidApp extends Application {
 		
 		this.player.update();
 		
-		if(Math.random() < 0.02) {
-			addEnemy(new Enemy(), Math.random()*this.root.getPrefWidth(), Math.random()*this.root.getPrefHeight());
+		if(Math.random() < 0.01) {
+			addEnemy(new Enemy(), Math.random()*this.root.getPrefWidth(), Math.random()*this.root.getPrefHeight(),
+					this.player.getView().getLayoutX()+20, this.player.getView().getLayoutY()+20);
 		}
 	}
 	
