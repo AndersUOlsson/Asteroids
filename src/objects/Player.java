@@ -6,9 +6,10 @@ import javafx.scene.shape.Rectangle;
 
 public class Player extends GameObject {
 
+
+	
 	public Player(Node view) {
 		super(new Rectangle(40,20, Color.BLUE));
-		
 	}
 	
 	public boolean isCollidingWithPlayer(Enemy enemy) {

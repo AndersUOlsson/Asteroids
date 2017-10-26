@@ -72,7 +72,6 @@ public class AsteroidApp extends Application {
 			this.enemies.add(enemy);
 			addGameObject(enemy, x, y);
 		}
-		
 	}
 	
 	private void addGameObject(GameObject object, double x, double y) {
@@ -111,6 +110,16 @@ public class AsteroidApp extends Application {
 				
 				this.root.getChildren().removeAll(player.getView(), enemy.getView());
 				this.root.getChildren().addAll(view.backgroudImageView(gameOverImage));
+				Thread tread = new Thread();
+				
+				try {
+					Thread.sleep(3000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				System.exit(1);
 
 			}
 		}
@@ -135,11 +144,20 @@ public class AsteroidApp extends Application {
 		
 		stage.setScene(new Scene(createContent()));
 		stage.getScene().setOnKeyPressed(e -> {
+			
 			if(e.getCode() == KeyCode.LEFT) {
-				this.player.rotateLeft();
+				this.player.left();
 			}
 			else if(e.getCode() == KeyCode.RIGHT) {
-				this.player.rotateRight();
+				this.player.right();
+			}
+			else if(e.getCode() == KeyCode.UP) {
+				this.player.up();
+				
+			}
+			else if(e.getCode() == KeyCode.DOWN) {
+				this.player.down();
+
 			}
 			else if(e.getCode() == KeyCode.SPACE) {
 				

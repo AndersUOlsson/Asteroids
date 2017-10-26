@@ -5,17 +5,23 @@ import javafx.scene.Node;
 
 public class GameObject {
 	
-	private Node view;
+	private double x;
+	private double y;
+	private double velX = 0;
+	private double velY = 0;
+	
+	protected Node view;
 	private Point2D velocity = new Point2D(0,0);
 	private boolean alive = true;
-	
+	 
 	public GameObject(Node view) {
 		this.view = view;
 	}
 	
+	
 	public void update() {
-		this.view.setTranslateX(this.view.getTranslateX() + this.velocity.getX());
-		this.view.setTranslateY(this.view.getTranslateY() + this.velocity.getY());
+		this.view.setTranslateX(this.view.getTranslateX() );
+		this.view.setTranslateY(this.view.getTranslateY());
 	}
 	
 	public void setVelocity(Point2D velocity) {
@@ -46,14 +52,33 @@ public class GameObject {
 		return this.view.getRotate();
 	}
 	
-	public void rotateRight() {
-		this.view.setRotate(this.view.getRotate() + 10);
-		setVelocity(new Point2D(Math.toRadians(getRotate()),Math.sin(Math.toRadians(getRotate()))));
+	
+
+	public void right() {
+		this.view.setTranslateX(this.view.getTranslateX() + 5); 
+		setVelocity(new Point2D(this.view.getTranslateX(), this.view.getTranslateY()));
+		System.out.println(getVelocity());
+	
+		
+		
 	}
 	
-	public void rotateLeft() {
-		this.view.setRotate(this.view.getRotate() - 10);
-		setVelocity(new Point2D(Math.toRadians(getRotate()),Math.sin(Math.toRadians(getRotate()))));
+	public void left() {
+		this.view.setTranslateX(this.view.getTranslateX() - 5); 
+		setVelocity(new Point2D(this.view.getTranslateX(), this.view.getTranslateY()));
+	}
+	
+	public void up() {
+		
+		this.view.setTranslateY(this.view.getTranslateY() - 5); 
+		setVelocity(new Point2D(this.view.getTranslateX(), this.view.getTranslateY()));
+		
+		
+	}
+	
+	public void down() {
+		this.view.setTranslateY(this.view.getTranslateY() + 5); 
+		setVelocity(new Point2D(this.view.getTranslateX(), this.view.getTranslateY()));
 	}
 
 	
